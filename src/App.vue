@@ -1,26 +1,38 @@
-<template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
-</template>
+<script setup>
+import { ref } from 'vue'
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
+const message = ref('Hello World!')
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+function reverseMessage() {
+  // Access/mutate the value of a ref via
+  // its .value property.
+  message.value = message.value.split('').reverse().join('')
+}
+
+function notify() {
+  alert('Navigation was prevented.')
 }
 </script>
 
+<template>
+  <!--
+    Note we don't need .value inside templates because
+    refs are automatically "unwrapped" in templates.
+  -->
+  <h1>{{ message }}</h1>
+  
+  <button @click="reverseMessage">Reverse Message</button>
+  
+  <button @click="message += '*'">Append "*"</button>
+  
+  <a href="https://vuejs.org" @click.prevent="notify">
+    A link with e.preventDefault()
+  </a>
+</template>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+button, a {
+  display: block;
+  margin-bottom: 1em;
 }
 </style>
